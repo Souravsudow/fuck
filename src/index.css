@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 53%;
+    --accent: 76 88% 72%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.1;
+    --ring: 76 88% 72%;
+    --radius: 0.625rem;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-[#0A0A0A] text-[#FAFAFA] antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .font-sans {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .text-outline {
+    -webkit-text-stroke: 1.5px rgba(250, 250, 250, 0.7);
+    color: transparent;
+  }
+
+  .sourav-fill-title {
+    background:
+      linear-gradient(180deg, rgba(250,250,250,0.94) 0%, rgba(212,248,122,0.95) 48%, rgba(139,171,67,0.9) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 22px rgba(212,248,122,0.22));
+    clip-path: inset(100% 0 0 0);
+    animation: sourav-water-fill 3.4s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards,
+      sourav-water-idle 4.8s ease-in-out 4.1s infinite;
+  }
+
+  .sourav-fill-title::after {
+    content: '';
+    position: absolute;
+    left: -4%;
+    right: -4%;
+    top: 31%;
+    height: 10px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(212,248,122,0.5), rgba(250,250,250,0.68), rgba(212,248,122,0.5), transparent);
+    filter: blur(6px);
+    opacity: 0;
+    animation: sourav-water-line 3.4s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+  }
+
+  .glass-form {
+    background: rgba(20, 20, 20, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(24px);
+  }
+
+  @keyframes loading-pulse {
+    0%, 100% {
+      opacity: 0.72;
+      transform: translateX(-50%) scale(0.98);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+  }
+
+  @keyframes sourav-water-fill {
+    0% {
+      clip-path: inset(100% 0 0 0);
+    }
+    70% {
+      clip-path: inset(27% 0 0 0);
+    }
+    100% {
+      clip-path: inset(18% 0 0 0);
+    }
+  }
+
+  @keyframes sourav-water-idle {
+    0%, 100% {
+      filter: drop-shadow(0 0 20px rgba(212,248,122,0.2));
+      transform: translateY(0);
+    }
+    50% {
+      filter: drop-shadow(0 0 30px rgba(212,248,122,0.32));
+      transform: translateY(-2px);
+    }
+  }
+
+  @keyframes sourav-water-line {
+    0% {
+      top: 100%;
+      opacity: 0;
+      transform: translateX(-8%);
+    }
+    18% {
+      opacity: 0.85;
+    }
+    70% {
+      top: 27%;
+      opacity: 0.75;
+      transform: translateX(8%);
+    }
+    100% {
+      top: 18%;
+      opacity: 0;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sourav-fill-title {
+      clip-path: inset(18% 0 0 0);
+      animation: none;
+    }
+
+    .sourav-fill-title::after {
+      display: none;
+    }
+  }
+
+  @keyframes loading-dot {
+    0%, 100% {
+      opacity: 0.3;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  @keyframes photo-card-float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+
+  @keyframes photo-card-float-side {
+    0%, 100% {
+      transform: translateX(0) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translateX(14px) rotate(2deg) scale(1.03);
+    }
+  }
+}
