@@ -19,7 +19,7 @@ export default function Contact() {
   const stats = [
     { value: '10+', label: 'Projects' },
     { value: '4', label: 'AI Builds' },
-    { value: '7.4', label: 'CGPA' },
+    { value: '8.0', label: 'CGPA' },
   ];
 
   useEffect(() => {
@@ -269,7 +269,7 @@ export default function Contact() {
               Song for late night builds.
             </h3>
             <p className="mt-4 max-w-[220px] font-sans text-[13px] leading-5 text-mouse-gray">
-              Hover to preview the track.
+            
             </p>
 
             <div className="absolute bottom-[-68px] left-1/2 h-56 w-56 -translate-x-1/2 rounded-full border border-kimono-white/10 bg-[#191919] shadow-[inset_0_0_0_18px_rgba(255,255,255,0.025)] transition duration-500 group-hover:bottom-[-44px] group-hover:rotate-6">
@@ -313,7 +313,7 @@ export default function Contact() {
               <div className="flex items-center justify-between gap-4">
                 <p className="font-sans text-[12px] uppercase tracking-[0.18em] text-lime-accent">Build Board</p>
                 <span className="rounded-full border border-lime-accent/25 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-lime-accent/80">
-                  Open to intern
+                  Open to intern / job
                 </span>
               </div>
               <h3 className="mt-4 font-display text-[33px] leading-none tracking-normal text-outline">
