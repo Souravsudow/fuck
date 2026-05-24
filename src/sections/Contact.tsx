@@ -17,9 +17,9 @@ export default function Contact() {
   });
 
   const stats = [
-    { value: '10+', label: 'Projects', note: 'built & shipped' },
-    { value: '4', label: 'AI Builds', note: 'resume, tutor, vision' },
-    { value: '7.4', label: 'CGPA', note: 'AI & data science' },
+    { value: '10+', label: 'Projects' },
+    { value: '4', label: 'AI Builds' },
+    { value: '7.4', label: 'CGPA' },
   ];
 
   useEffect(() => {
@@ -260,26 +260,26 @@ export default function Contact() {
         <div className="grid w-full max-w-[900px] grid-cols-1 gap-4 lg:grid-cols-[0.9fr_1.35fr_0.82fr]">
           <button
             type="button"
-            className="contact-extra group relative h-[520px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-kimono-white/[0.035] p-7 text-left transition duration-500 hover:-translate-y-4 hover:scale-[1.02] hover:border-lime-accent/40 hover:shadow-[0_24px_70px_rgba(212,248,122,0.11)]"
+            className="contact-extra group relative h-[480px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-kimono-white/[0.035] p-6 text-left transition duration-500 hover:-translate-y-4 hover:scale-[1.02] hover:border-lime-accent/40 hover:shadow-[0_24px_70px_rgba(212,248,122,0.11)]"
             onMouseEnter={() => playAudio(favoriteAudioRef.current)}
             onMouseLeave={() => stopAudio(favoriteAudioRef.current)}
           >
             <p className="font-sans text-[12px] uppercase tracking-[0.18em] text-lime-accent">Recent Favorite</p>
-            <h3 className="mt-5 font-serif text-[28px] leading-tight text-kimono-white">
-              Song that keeps the build moving.
+            <h3 className="mt-5 font-serif text-[25px] leading-tight text-kimono-white">
+              Song for late night builds.
             </h3>
-            <p className="mt-4 max-w-[260px] font-sans text-sm leading-6 text-mouse-gray">
-              Upload your track and this card will preview it on hover.
+            <p className="mt-4 max-w-[220px] font-sans text-[13px] leading-5 text-mouse-gray">
+              Hover to preview the track.
             </p>
 
-            <div className="absolute bottom-[-54px] left-1/2 h-64 w-64 -translate-x-1/2 rounded-full border border-kimono-white/10 bg-[#191919] shadow-[inset_0_0_0_18px_rgba(255,255,255,0.025)] transition duration-500 group-hover:bottom-[-28px] group-hover:rotate-6">
+            <div className="absolute bottom-[-68px] left-1/2 h-56 w-56 -translate-x-1/2 rounded-full border border-kimono-white/10 bg-[#191919] shadow-[inset_0_0_0_18px_rgba(255,255,255,0.025)] transition duration-500 group-hover:bottom-[-44px] group-hover:rotate-6">
               <div className="absolute inset-7 rounded-full border border-kimono-white/10" />
               <div className="absolute inset-14 rounded-full border border-kimono-white/10" />
               <div className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime-accent/20" />
             </div>
 
             <div
-              className="absolute bottom-8 left-8 right-8 h-44 overflow-hidden rounded-xl border border-kimono-white/10 bg-black/55 backdrop-blur-md transition duration-500 group-hover:-translate-y-4"
+              className="absolute bottom-7 left-7 right-7 h-36 overflow-hidden rounded-xl border border-kimono-white/10 bg-black/55 backdrop-blur-md transition duration-500 group-hover:-translate-y-3"
               style={{
                 backgroundImage: `url("${coverImage}")`,
                 backgroundSize: 'cover',
@@ -298,7 +298,7 @@ export default function Contact() {
             </div>
           </button>
 
-          <div className="contact-extra relative h-[520px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-[#0D0F0C]/80 p-6 backdrop-blur-xl">
+          <div className="contact-extra relative h-[480px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-[#0D0F0C]/80 p-6 backdrop-blur-xl">
             <div
               className="absolute inset-0 rounded-2xl opacity-30"
               style={{
@@ -316,11 +316,11 @@ export default function Contact() {
                   Open to intern
                 </span>
               </div>
-              <h3 className="mt-4 font-display text-[38px] leading-none tracking-normal text-outline">
+              <h3 className="mt-4 font-display text-[33px] leading-none tracking-normal text-outline">
                 BUILD SIGNALS
               </h3>
-              <p className="mt-3 max-w-[430px] font-sans text-[13px] leading-5 text-mouse-gray">
-                A quick snapshot of what I bring: frontend taste, AI project thinking, and enough discipline to keep shipping.
+              <p className="mt-3 max-w-[400px] font-sans text-[12px] leading-5 text-mouse-gray">
+                Frontend taste, AI project thinking, and a shipping mindset.
               </p>
 
               <div className="mt-5 grid grid-cols-3 gap-2.5">
@@ -329,19 +329,18 @@ export default function Contact() {
                     key={stat.label}
                     className="rounded-xl border border-kimono-white/10 bg-black/40 p-3 transition duration-300 hover:-translate-y-1 hover:border-lime-accent/35"
                   >
-                    <p className="font-sans text-2xl font-semibold leading-none text-kimono-white">{stat.value}</p>
+                    <p className="font-sans text-[26px] font-semibold leading-none text-kimono-white">{stat.value}</p>
                     <p className="mt-2 font-sans text-[10px] uppercase tracking-[0.1em] text-kimono-white/65">{stat.label}</p>
-                    <p className="mt-1 font-sans text-[10px] leading-3 text-mouse-gray">{stat.note}</p>
                   </div>
                 ))}
               </div>
 
               <div className="mt-5 rounded-xl border border-lime-accent/20 bg-lime-accent/[0.06] p-4">
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-lime-accent">Current Focus</p>
-                <p className="mt-3 font-serif text-[20px] leading-snug text-kimono-white">
-                  Building polished React interfaces with AI features, clean UX, and cinematic motion.
+                <p className="mt-3 font-serif text-[18px] leading-snug text-kimono-white">
+                  Polished React interfaces with AI features, clean UX, and controlled motion.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-3 flex flex-wrap gap-2">
                   {['React', 'Tailwind', 'GSAP', 'AI UX'].map((item) => (
                     <span
                       key={item}
@@ -357,7 +356,7 @@ export default function Contact() {
 
           <button
             type="button"
-            className="contact-extra group relative h-[520px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-kimono-white/[0.035] p-7 text-left transition duration-500 hover:-translate-y-4 hover:scale-[1.02] hover:border-lime-accent/40 hover:shadow-[0_24px_70px_rgba(212,248,122,0.11)]"
+            className="contact-extra group relative h-[480px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-kimono-white/[0.035] p-7 text-left transition duration-500 hover:-translate-y-4 hover:scale-[1.02] hover:border-lime-accent/40 hover:shadow-[0_24px_70px_rgba(212,248,122,0.11)]"
             onMouseEnter={() => playAudio(animeAudioRef.current)}
             onMouseLeave={() => stopAudio(animeAudioRef.current)}
           >
