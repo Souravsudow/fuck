@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Loader from './components/Loader';
 import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
+import NoiseOverlay from './components/NoiseOverlay';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Included from './sections/Included';
@@ -56,6 +57,7 @@ export default function App() {
         <>
           <CustomCursor />
           <ScrollProgress />
+          <NoiseOverlay />
         </>
       )}
       <Hero />

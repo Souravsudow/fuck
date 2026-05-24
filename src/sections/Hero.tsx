@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Globe } from 'lucide-react';
-import { useScramble } from '../hooks/useScramble';
-import { useTypewriter } from '../hooks/useTypewriter';
+// Animation hooks imported inline in components
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -270,8 +269,8 @@ export default function Hero() {
       {/* Mid-ground Plane - portfolio title, tucked behind the mountain facade */}
       <div
         ref={textRef}
-        className="absolute inset-0 z-[2] flex items-start justify-center will-change-transform"
-        style={{ top: '12%' }}
+        className="absolute inset-0 z-[2] flex flex-col items-center justify-start will-change-transform"
+        style={{ top: '10%' }}
       >
         <div
           ref={titleRef}
@@ -283,6 +282,13 @@ export default function Hero() {
           }}
         >
           <ScrambleTitle />
+        </div>
+
+        {/* Typewriter Subtitle - below title */}
+        <div className="mt-4 text-center">
+          <p className="font-mono text-lime-accent/70" style={{ fontSize: 13, letterSpacing: '0.14em' }}>
+            <TypewriterText />
+          </p>
         </div>
       </div>
 
@@ -307,9 +313,6 @@ export default function Hero() {
       >
         <DeveloperFigure />
       </div>
-
-      {/* Typewriter Subtitle */}
-      <TypewriterSubtitle />
 
       {/* Navigation */}
       <nav
@@ -599,15 +602,17 @@ function DynamicBackground() {
   return (
     <div className="absolute inset-0 z-[0] pointer-events-none">
       <div 
-        className="absolute inset-0 opacity-50 transition-all duration-700 ease-out"
+        className="absolute inset-0 transition-all duration-500 ease-out"
         style={{
-          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(212,248,122,0.12) 0%, transparent 40%)`,
+          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(212,248,122,0.18) 0%, transparent 45%)`,
+          opacity: 0.8,
         }}
       />
       <div 
-        className="absolute inset-0 opacity-30 transition-all duration-1000 ease-out"
+        className="absolute inset-0 transition-all duration-700 ease-out"
         style={{
-          background: `radial-gradient(circle at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(156,217,255,0.08) 0%, transparent 50%)`,
+          background: `radial-gradient(circle at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(156,217,255,0.12) 0%, transparent 55%)`,
+          opacity: 0.6,
         }}
       />
     </div>
@@ -705,13 +710,39 @@ function ProjectPreviewCard({
 
 // Scramble Title Component
 function ScrambleTitle() {
-  const [trigger, setTrigger] = useState(false);
-  const scrambled = useScramble('SOURAV', trigger, 40);
+  const [display, setDisplay] = useState('SOURAV');
+  const [started, setStarted] = useState(false);
+  const chars = '!<>-_\/[]{}—=+*^?#________';
 
   useEffect(() => {
-    const timer = setTimeout(() => setTrigger(true), 600);
+    const timer = setTimeout(() => setStarted(true), 800);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!started) return;
+
+    const text = 'SOURAV';
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplay(
+        text
+          .split('')
+          .map((char, idx) => {
+            if (idx < i) return text[idx];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join('')
+      );
+      i += 0.4;
+      if (i >= text.length) {
+        setDisplay(text);
+        clearInterval(interval);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [started]);
 
   return (
     <>
@@ -723,28 +754,52 @@ function ScrambleTitle() {
           textShadow: '0 0 18px rgba(250,250,250,0.12)',
         }}
       >
-        {scrambled}
+        {display}
       </h1>
       <h1
         aria-hidden="true"
         className="sourav-fill-title pointer-events-none absolute inset-0 font-display uppercase"
+        style={{
+          background: 'linear-gradient(180deg, #D4F87A 0%, #a8c952 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          opacity: 0.9,
+        }}
       >
-        {scrambled}
+        {display}
       </h1>
     </>
   );
 }
 
-// Typewriter Subtitle Component
-function TypewriterSubtitle() {
-  const typed = useTypewriter('Frontend Developer & AI Builder', 70, 1200);
+// Typewriter Text Component
+function TypewriterText() {
+  const [display, setDisplay] = useState('');
+  const [started, setStarted] = useState(false);
+  const text = 'Frontend Developer & AI Builder';
+
+  useEffect(() => {
+    const timer = setTimeout(() => setStarted(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplay(text.slice(0, i));
+      i++;
+      if (i > text.length) clearInterval(interval);
+    }, 60);
+
+    return () => clearInterval(interval);
+  }, [started]);
 
   return (
-    <div className="absolute left-1/2 top-[58%] -translate-x-1/2 z-[4]">
-      <p className="font-mono text-lime-accent/80" style={{ fontSize: 13, letterSpacing: '0.12em' }}>
-        {typed}
-        <span className="animate-pulse">|</span>
-      </p>
-    </div>
+    <>
+      {display}
+      <span className="animate-pulse">|</span>
+    </>
   );
 }
