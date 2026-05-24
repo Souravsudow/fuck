@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Download, ExternalLink, FileDown } from 'lucide-react';
+import { Download, ExternalLink, FileDown, CheckCircle, Loader2 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,10 +53,44 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Thanks! I will get back to you soon.');
-    setFormData({ name: '', email: '', comment: '' });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: '94143e17-d1be-4772-b9c2-4bea35999d1d',
+          name: formData.name,
+          email: formData.email,
+          message: formData.comment,
+          subject: `New project brief from ${formData.name}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', comment: '' });
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const playAudio = (audio: HTMLAudioElement | null) => {
@@ -167,6 +201,25 @@ export default function Contact() {
             Send a project brief
           </p>
 
+          {/* Success Message */}
+          {submitStatus === 'success' && (
+            <div className="mt-6 flex items-center gap-3 rounded-xl border border-lime-accent/30 bg-lime-accent/10 p-4">
+              <CheckCircle size={18} className="text-lime-accent" />
+              <p className="font-sans text-sm text-lime-accent">
+                Message sent! I will get back to you soon.
+              </p>
+            </div>
+          )}
+
+          {/* Error Message */}
+          {submitStatus === 'error' && (
+            <div className="mt-6 flex items-center gap-3 rounded-xl border border-red-500/30 bg-red-500/10 p-4">
+              <p className="font-sans text-sm text-red-400">
+                Something went wrong. Please try again.
+              </p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-8">
             <div className="form-field">
               <input
@@ -189,6 +242,7 @@ export default function Contact() {
                   e.target.style.boxShadow = 'none';
                 }}
                 required
+                disabled={isSubmitting}
               />
             </div>
 
@@ -213,6 +267,7 @@ export default function Contact() {
                   e.target.style.boxShadow = 'none';
                 }}
                 required
+                disabled={isSubmitting}
               />
             </div>
 
@@ -236,14 +291,16 @@ export default function Contact() {
                   e.target.style.borderBottomColor = 'rgba(255,255,255,0.1)';
                   e.target.style.boxShadow = 'none';
                 }}
+                disabled={isSubmitting}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full font-sans uppercase rounded-full transition-all duration-300 hover:bg-lime-accent mt-4"
+              disabled={isSubmitting}
+              className="w-full font-sans uppercase rounded-full transition-all duration-300 hover:bg-lime-accent mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               style={{
-                background: '#FAFAFA',
+                background: isSubmitting ? '#333' : '#FAFAFA',
                 color: '#0A0A0A',
                 fontSize: 14,
                 letterSpacing: '0.08em',
@@ -253,7 +310,14 @@ export default function Contact() {
               }}
               data-cursor="hover"
             >
-              Send brief
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                'Send brief'
+              )}
             </button>
           </form>
         </div>

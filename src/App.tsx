@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import Loader from './components/Loader';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Included from './sections/Included';
@@ -12,9 +13,19 @@ import Footer from './sections/Footer';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
+    // Simulate load time (images, fonts, etc.)
+    const timer = setTimeout(() => setIsLoading(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isLoading) return;
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
+
     const lenis = new Lenis({
       duration: prefersReducedMotion ? 0 : 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -35,10 +46,11 @@ export default function App() {
       lenis.destroy();
       gsap.ticker.remove(rafCallback);
     };
-  }, []);
+  }, [isLoading]);
 
   return (
     <div className="relative">
+      {isLoading && <Loader />}
       <Hero />
       <About />
       <Included />
