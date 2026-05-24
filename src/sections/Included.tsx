@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, BrainCircuit, GraduationCap, ScanFace, Sparkles } from 'lucide-react';
+import { ArrowUpRight, BrainCircuit, GraduationCap, ScanFace, Sparkles, ExternalLink, Github } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -80,7 +80,7 @@ export default function Included() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const [activeProject, setActiveProject] = useState(0);
+  const [activeProject, setActiveProject] = useState(-1);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -290,6 +290,38 @@ function ProjectCard({
           ))}
         </div>
 
+        {/* Buttons - Always visible */}
+        <div className="mt-5 flex flex-wrap gap-2.5">
+          {deployment ? (
+            <a
+              href={deployment}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-lime-accent/35 bg-lime-accent/10 px-4 py-2 font-sans text-[11px] uppercase tracking-[0.12em] text-lime-accent transition duration-300 hover:bg-lime-accent hover:text-mist-black"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Live Demo
+              <ExternalLink size={13} strokeWidth={1.7} />
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-2 rounded-full border border-kimono-white/10 px-4 py-2 font-sans text-[11px] uppercase tracking-[0.12em] text-kimono-white/30 cursor-not-allowed">
+              Live Demo
+              <ExternalLink size={13} strokeWidth={1.7} />
+            </span>
+          )}
+          <a
+            href={`https://github.com/Souravsudow/${title.toLowerCase().split(' ').join('-')}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-kimono-white/20 px-4 py-2 font-sans text-[11px] uppercase tracking-[0.12em] text-kimono-white/60 transition duration-300 hover:border-kimono-white/40 hover:text-kimono-white"
+            onClick={(e) => e.stopPropagation()}
+          >
+            GitHub
+            <Github size={13} strokeWidth={1.7} />
+          </a>
+        </div>
+
+        {/* Details - Expandable */}
         <div
           className="overflow-hidden transition-all duration-500"
           style={{
@@ -298,19 +330,8 @@ function ProjectCard({
             transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <div className="mt-6 border-t border-kimono-white/10 pt-5">
-            <a
-              href={deployment}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-lime-accent/35 px-4 py-2 font-sans text-[11px] uppercase tracking-[0.12em] text-lime-accent transition duration-300 hover:bg-lime-accent hover:text-mist-black"
-              onClick={(e) => e.stopPropagation()}
-            >
-              Deployment
-              <ArrowUpRight size={14} strokeWidth={1.7} />
-            </a>
-
-            <ul className="mt-5 space-y-3">
+          <div className="mt-5 border-t border-kimono-white/10 pt-5">
+            <ul className="space-y-3">
               {details.map((detail) => (
                 <li
                   key={detail}

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Globe } from 'lucide-react';
+import { useScramble } from '../hooks/useScramble';
+import { useTypewriter } from '../hooks/useTypewriter';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -241,6 +243,9 @@ export default function Hero() {
       className="relative w-full overflow-hidden"
       style={{ height: '100vh' }}
     >
+      {/* Dynamic Mouse Background */}
+      <DynamicBackground />
+
       {/* Background Plane - cinematic developer desk */}
       <div
         ref={skyRef}
@@ -277,22 +282,7 @@ export default function Hero() {
             lineHeight: 0.85,
           }}
         >
-          <h1
-            className="font-display uppercase"
-            style={{
-              WebkitTextStroke: '1.7px rgba(250,250,250,0.82)',
-              color: 'transparent',
-              textShadow: '0 0 18px rgba(250,250,250,0.12)',
-            }}
-          >
-            SOURAV
-          </h1>
-          <h1
-            aria-hidden="true"
-            className="sourav-fill-title pointer-events-none absolute inset-0 font-display uppercase"
-          >
-            SOURAV
-          </h1>
+          <ScrambleTitle />
         </div>
       </div>
 
@@ -317,6 +307,9 @@ export default function Hero() {
       >
         <DeveloperFigure />
       </div>
+
+      {/* Typewriter Subtitle */}
+      <TypewriterSubtitle />
 
       {/* Navigation */}
       <nav
@@ -588,6 +581,39 @@ function DeveloperFigure() {
   );
 }
 
+// Dynamic Background Component
+function DynamicBackground() {
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+
+  useEffect(() => {
+    const handleMouse = (e: MouseEvent) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100,
+      });
+    };
+    window.addEventListener('mousemove', handleMouse);
+    return () => window.removeEventListener('mousemove', handleMouse);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 z-[0] pointer-events-none">
+      <div 
+        className="absolute inset-0 opacity-50 transition-all duration-700 ease-out"
+        style={{
+          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(212,248,122,0.12) 0%, transparent 40%)`,
+        }}
+      />
+      <div 
+        className="absolute inset-0 opacity-30 transition-all duration-1000 ease-out"
+        style={{
+          background: `radial-gradient(circle at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(156,217,255,0.08) 0%, transparent 50%)`,
+        }}
+      />
+    </div>
+  );
+}
+
 function ProjectPreviewCard({
   caption,
   accent,
@@ -601,18 +627,27 @@ function ProjectPreviewCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseEnter = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
-    if (card) {
-      card.style.transform = 'translateX(8px) scale(1.04)';
-      card.style.boxShadow = '0 20px 40px rgba(255,184,197,0.2)';
-    }
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -12;
+    const rotateY = ((x - centerX) / centerX) * 12;
+
+    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.06) translateX(4px)`;
+    card.style.boxShadow = '0 20px 40px rgba(255,184,197,0.25)';
   };
 
   const handleMouseLeave = () => {
     const card = cardRef.current;
     if (card) {
-      card.style.transform = 'translateY(0)';
+      card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) scale(1) translateX(0)';
       card.style.boxShadow = 'none';
     }
   };
@@ -632,7 +667,7 @@ function ProjectPreviewCard({
         transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
         willChange: 'transform, opacity',
       }}
-      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       data-cursor="hover"
       aria-label={caption}
@@ -664,6 +699,52 @@ function ProjectPreviewCard({
           }}
         />
       </div>
+    </div>
+  );
+}
+
+// Scramble Title Component
+function ScrambleTitle() {
+  const [trigger, setTrigger] = useState(false);
+  const scrambled = useScramble('SOURAV', trigger, 40);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setTrigger(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <h1
+        className="font-display uppercase"
+        style={{
+          WebkitTextStroke: '1.7px rgba(250,250,250,0.82)',
+          color: 'transparent',
+          textShadow: '0 0 18px rgba(250,250,250,0.12)',
+        }}
+      >
+        {scrambled}
+      </h1>
+      <h1
+        aria-hidden="true"
+        className="sourav-fill-title pointer-events-none absolute inset-0 font-display uppercase"
+      >
+        {scrambled}
+      </h1>
+    </>
+  );
+}
+
+// Typewriter Subtitle Component
+function TypewriterSubtitle() {
+  const typed = useTypewriter('Frontend Developer & AI Builder', 70, 1200);
+
+  return (
+    <div className="absolute left-1/2 top-[58%] -translate-x-1/2 z-[4]">
+      <p className="font-mono text-lime-accent/80" style={{ fontSize: 13, letterSpacing: '0.12em' }}>
+        {typed}
+        <span className="animate-pulse">|</span>
+      </p>
     </div>
   );
 }

@@ -200,3 +200,22 @@ html.lenis, html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+/* Hide default cursor on desktop */
+@media (min-width: 1024px) {
+  * { cursor: none !important; }
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* Selection */
+::selection {
+  background: rgba(212, 248, 122, 0.3);
+  color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: rgba(212, 248, 122, 0.3); border-radius: 3px; }

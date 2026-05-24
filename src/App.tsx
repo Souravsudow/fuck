@@ -4,6 +4,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Loader from './components/Loader';
+import CustomCursor from './components/CustomCursor';
+import ScrollProgress from './components/ScrollProgress';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Included from './sections/Included';
@@ -16,7 +18,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate load time (images, fonts, etc.)
     const timer = setTimeout(() => setIsLoading(false), 2500);
     return () => clearTimeout(timer);
   }, []);
@@ -51,6 +52,12 @@ export default function App() {
   return (
     <div className="relative">
       {isLoading && <Loader />}
+      {!isLoading && (
+        <>
+          <CustomCursor />
+          <ScrollProgress />
+        </>
+      )}
       <Hero />
       <About />
       <Included />
