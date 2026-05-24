@@ -299,7 +299,7 @@ export default function Contact() {
             </div>
           </button>
 
-          <div className="contact-extra relative h-[480px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-[#0D0F0C]/80 p-6 backdrop-blur-xl">
+          <div className="contact-extra relative min-h-[480px] overflow-hidden rounded-2xl border border-kimono-white/15 bg-[#0D0F0C]/80 p-6 backdrop-blur-xl">
             <div
               className="absolute inset-0 rounded-2xl opacity-30"
               style={{
@@ -336,7 +336,7 @@ export default function Contact() {
                 ))}
               </div>
 
-              <div className="mt-5 rounded-xl border border-lime-accent/20 bg-lime-accent/[0.06] p-4">
+              <div className="mt-4 rounded-xl border border-lime-accent/20 bg-lime-accent/[0.06] p-4">
                 <div className="flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-lime-accent/25 bg-lime-accent/10 text-lime-accent">
                     <FileDown size={18} strokeWidth={1.7} />
@@ -347,7 +347,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <h4 className="mt-4 font-sans text-[24px] font-semibold leading-none text-kimono-white">
+                <h4 className="mt-3 font-sans text-[24px] font-semibold leading-none text-kimono-white">
                   Download CV
                 </h4>
 
@@ -364,7 +364,7 @@ export default function Contact() {
                   ))}
                 </div>
 
-                <div className="mt-5 flex items-center gap-4 font-sans text-[12px] font-medium uppercase tracking-[0.12em]">
+                <div className="mt-4 flex items-center gap-4 font-sans text-[12px] font-medium uppercase tracking-[0.12em]">
                   <a
                     href="/resume.pdf"
                     target="_blank"
