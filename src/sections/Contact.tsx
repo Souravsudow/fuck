@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Download, ExternalLink, FileDown } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -336,19 +337,52 @@ export default function Contact() {
               </div>
 
               <div className="mt-5 rounded-xl border border-lime-accent/20 bg-lime-accent/[0.06] p-4">
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-lime-accent">Current Focus</p>
-                <p className="mt-3 font-serif text-[18px] leading-snug text-kimono-white">
-                  
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {['React', 'Tailwind', 'GSAP', 'AI UX'].map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-kimono-white/10 px-2.5 py-1 font-sans text-[9px] uppercase tracking-[0.12em] text-kimono-white/60"
-                    >
-                      {item}
-                    </span>
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-lime-accent/25 bg-lime-accent/10 text-lime-accent">
+                    <FileDown size={18} strokeWidth={1.7} />
+                  </span>
+                  <div>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-lime-accent">Resume</p>
+                    <p className="font-sans text-[11px] text-mouse-gray">Full experience and skills</p>
+                  </div>
+                </div>
+
+                <h4 className="mt-4 font-sans text-[24px] font-semibold leading-none text-kimono-white">
+                  Download CV
+                </h4>
+
+                <div className="mt-5 grid grid-cols-3 gap-3">
+                  {[
+                    { value: '10+', label: 'Projects' },
+                    { value: '3', label: 'Internships' },
+                    { value: '2+', label: 'Years' },
+                  ].map((item) => (
+                    <div key={item.label}>
+                      <p className="font-sans text-[20px] font-semibold leading-none text-kimono-white">{item.value}</p>
+                      <p className="mt-2 font-sans text-[9px] uppercase tracking-[0.13em] text-mouse-gray">{item.label}</p>
+                    </div>
                   ))}
+                </div>
+
+                <div className="mt-5 flex items-center gap-4 font-sans text-[12px] font-medium uppercase tracking-[0.12em]">
+                  <a
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 text-kimono-white/65 transition hover:text-lime-accent"
+                  >
+                    View
+                    <ExternalLink size={13} strokeWidth={1.7} />
+                  </a>
+                  <span className="h-4 w-px bg-kimono-white/15" />
+                  <a
+                    href="/resume.pdf"
+                    download
+                    className="inline-flex items-center gap-2 text-kimono-white/65 transition hover:text-lime-accent"
+                  >
+                    Download
+                    <Download size={13} strokeWidth={1.7} />
+                  </a>
                 </div>
               </div>
             </div>
